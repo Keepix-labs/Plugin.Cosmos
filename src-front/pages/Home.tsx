@@ -5,7 +5,7 @@ import { safeFetch } from "../lib/utils";
 import {
   KEEPIX_API_URL,
   PLUGIN_API_SUBPATH,
-  TEZOS_NODE_API_URL,
+  COSMOS_NODE_API_URL,
 } from "../constants";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
@@ -44,7 +44,9 @@ export default function HomePage() {
 
   const getDataBaker = useMutation({
     mutationFn: async (address: string) => {
-      const reponse = await axios.get(`${TEZOS_NODE_API_URL}/baker/${address}`);
+      const reponse = await axios.get(
+        `${COSMOS_NODE_API_URL}/baker/${address}`
+      );
       return reponse.data;
     },
     onError: (error: any) => {},
@@ -52,7 +54,7 @@ export default function HomePage() {
 
   const getBakersQuery = useMutation({
     mutationFn: async () => {
-      const reponse = await axios.get(`${TEZOS_NODE_API_URL}/bakers`);
+      const reponse = await axios.get(`${COSMOS_NODE_API_URL}/bakers`);
       return reponse.data;
     },
     onError: (error: any) => {},
@@ -130,20 +132,6 @@ export default function HomePage() {
     getDataBaker.mutate(baker.value);
     getWalletBalance.mutate();
   };
-
-  const isDelegated =
-    statusQuery?.data?.IsDelegated !== undefined &&
-    statusQuery?.data?.IsDelegated
-      ? true
-      : false;
-
-  useEffect(() => {
-    getDataBaker.reset();
-    if (isDelegated) {
-      getDataBaker.mutate(statusQuery?.data?.DelegatedAddress);
-      getWalletBalance.mutate();
-    }
-  }, [isDelegated]);
 
   return (
     <div className="AppBase-content">
@@ -331,53 +319,6 @@ export default function HomePage() {
               ></Progress>
             </div>
           </BigLoader>
-        )}
-
-      {statusQuery?.data &&
-        syncProgressQuery?.data &&
-        syncProgressQuery?.data?.IsSynced === true &&
-        statusQuery.data?.NodeState === "NODE_RUNNING" &&
-        walletQuery.data?.Wallet !== undefined && (
-          <>
-            <BigLoader title="Node Ready" disableLabel={true} full={true}>
-              {!isDelegated ? (
-                <Btn status="warning" onClick={() => getBakersQuery.mutate()}>
-                  Delegating to a bakery
-                </Btn>
-              ) : (
-                <></>
-              )}
-
-              {getBakersQuery.isPending && <p>Loading bakers...</p>}
-              {getBakersQuery.isError && <p>Error loading bakers</p>}
-              {!getBakersQuery.isPending &&
-                getBakersQuery.data &&
-                !isDelegated && (
-                  <BakersDropdown
-                    bakers={getBakersQuery?.data}
-                    onSelect={handleBakerSelect}
-                    isDelegated={isDelegated}
-                    DelegatedAddress={statusQuery?.data?.DelegatedAddress}
-                  />
-                )}
-              {getDataBaker.isPending && <p>Loading baker data ...</p>}
-              {getDataBaker.isError && <p>Error loading bakers</p>}
-              {getDataBaker.data && (
-                <BakerDetails
-                  baker={getDataBaker.data}
-                  DelegatedDate={statusQuery?.data?.DelegatedDate}
-                />
-              )}
-              {getDataBaker.data && getWalletBalance.data && (
-                <RewardsSection
-                  baker={getDataBaker.data}
-                  walletBalance={getWalletBalance.data}
-                  StatusData={statusQuery?.data}
-                />
-              )}
-              <FAQ></FAQ>
-            </BigLoader>
-          </>
         )}
 
       <Sprites></Sprites>

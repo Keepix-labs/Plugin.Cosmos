@@ -5,10 +5,7 @@ const fs = require("fs");
 const { exec } = require("child_process");
 const cors = require("cors");
 
-const pluginId = fs
-  .readdirSync(".")
-  .filter((x) => x.endsWith(".csproj"))
-  .map((x) => x.replace(".csproj", ""))[0];
+const pluginId = "Plugin.Cosmos";
 
 const execPluginFunction = async (argObject) => {
   return await new Promise((resolve) => {

@@ -57,7 +57,7 @@ namespace Plugin.Cosmos.Commands
 
             stateManager.DB.Store("STATE", PluginStateEnum.STARTING_NODE);
 
-            await Plugin.Cosmos.src.Services.ProcessService.ExecuteCommand("docker", "compose up -d", workingDirectory: SetupService.GetTmpAbsolutePath(Configurations.GAIA_FOLDER_NAME));
+            await ProcessService.ExecuteCommand("docker", "compose up -d", workingDirectory: SetupService.GetTmpAbsolutePath(Configurations.GAIA_FOLDER_NAME));
 
             return true;
         }
@@ -76,7 +76,7 @@ namespace Plugin.Cosmos.Commands
                 stateManager = PluginStateManager.GetStateManager();
 
                 stateManager.DB.Store("STATE", PluginStateEnum.NODE_RUNNING);
-                await Plugin.Cosmos.src.Services.ProcessService.ExecuteCommand("docker", "restart cosmos");
+                await ProcessService.ExecuteCommand("docker", "restart cosmos");
                 return true;
 
             }
@@ -88,7 +88,7 @@ namespace Plugin.Cosmos.Commands
         }
 
         [KeepixPluginFn("stop")]
-        public static async Task<bool> OnStartFunc()
+        public static async Task<bool> OnStoptFunc()
         {
             var allRulesPassed = await SetupService.ApplyRules(SetupService.IsDockerRunning, SetupService.IsNotContainnerRunning);
             if (!allRulesPassed)
@@ -109,6 +109,12 @@ namespace Plugin.Cosmos.Commands
                 return false;
             }
 
+        }
+
+        [KeepixPluginFn("test")]
+        public static async Task<bool> test()
+        {
+            return true;
         }
 
 

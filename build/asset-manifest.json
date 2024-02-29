@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/Plugin.Cosmos/view/static/css/main.035d5130.css",
+    "main.js": "/Plugin.Cosmos/view/static/js/main.5b98452c.js",
+    "static/js/453.d9a735b0.chunk.js": "/Plugin.Cosmos/view/static/js/453.d9a735b0.chunk.js",
+    "static/media/Satoshi-Variable.woff2": "/Plugin.Cosmos/view/static/media/Satoshi-Variable.353a66cdd8922bb63107.woff2",
+    "static/media/ClashDisplay-Variable.woff2": "/Plugin.Cosmos/view/static/media/ClashDisplay-Variable.27b50dcdd5ced9f74da0.woff2",
+    "index.html": "/Plugin.Cosmos/view/index.html",
+    "main.035d5130.css.map": "/Plugin.Cosmos/view/static/css/main.035d5130.css.map",
+    "main.5b98452c.js.map": "/Plugin.Cosmos/view/static/js/main.5b98452c.js.map",
+    "453.d9a735b0.chunk.js.map": "/Plugin.Cosmos/view/static/js/453.d9a735b0.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.035d5130.css",
+    "static/js/main.5b98452c.js"
+  ]
+}
