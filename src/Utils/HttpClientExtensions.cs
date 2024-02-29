@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Plugin.Tezos.src.Utils
+namespace Plugin.Cosmos.src.Utils
 {
 
     public static class HttpClientExtensions

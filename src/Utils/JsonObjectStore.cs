@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Plugin.Tezos.src.Utils
+namespace Plugin.Cosmos.src.Utils
 {
     public class JsonObjectStore
     {

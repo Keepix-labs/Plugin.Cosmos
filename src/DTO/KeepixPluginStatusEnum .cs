@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Plugin.Tezos.src.DTO
+namespace Plugin.Cosmos.src.DTO
 {
     public static class KeepixPluginStatusEnum
     {

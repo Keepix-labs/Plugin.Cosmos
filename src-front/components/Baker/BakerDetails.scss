@@ -1,0 +1,99 @@
+.baker-details-container {
+  background-color: #222222;
+  padding: 20px;
+  margin-top: 10px;
+  border-radius: 10px;
+  width: calc(100% + 20px);
+}
+
+.baker-details {
+  width: 100%;
+  border-collapse: collapse;
+  color: white;
+
+  tr:first-child {
+    background-color: #1a1a1a;
+    border: 1px solid #141414;
+    border-radius: 30px;
+  }
+
+  td {
+    vertical-align: middle;
+    padding: 10px;
+    text-align: center;
+  }
+  .baker-image {
+    width: 60px;
+    height: 60px;
+    border: 2px solid white;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: auto;
+  }
+
+  .baker-name,
+  .baker-yield {
+    padding: 10px;
+  }
+}
+
+.rewards-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-bottom: 60px;
+
+  .reward-block {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    flex-grow: 1;
+    margin-right: 10px;
+    border-radius: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .reward-block-deleg {
+    background-color: #222222;
+    color: white;
+    padding: 15px;
+    flex-grow: 1;
+    margin-right: 10px;
+    border-radius: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .delegate-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 5%;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.delegate-button {
+  &.loading {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}

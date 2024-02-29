@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  cosmos:
+    container_name: cosmos
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "26656:26656"
+      - "26657:26657"
+      - "1317:1317"
+      - "9090:9090"
+    volumes:
+      - gaiad-data:/root/.gaia
+    environment:
+      - PACKAGES=curl make git libc-dev bash gcc linux-headers eudev-dev python3
+    entrypoint: ["/usr/local/bin/start-gaiad.sh"]
+    user: "0"
+    restart: always
+
+volumes:
+  gaiad-data:
