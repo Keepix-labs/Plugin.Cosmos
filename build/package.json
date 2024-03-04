@@ -1,6 +1,6 @@
 {
     "name": "keepix-plugin-cosmos-build",
-    "version": "0.0.42",
+    "version": "0.0.43",
     "dependencies": {},
     "scripts": {
         "start": "echo 'hello'"

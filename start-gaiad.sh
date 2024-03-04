@@ -13,7 +13,6 @@ PRUNING_KEEP_RECENT="100"
 PRUNING_KEEP_EVERY="0"
 PRUNING_INTERVAL="10"
 
-
 update_or_add() {
     local key="$1"
     local value="$2"
@@ -36,7 +35,6 @@ check_download_success() {
         return 1
     fi
 }
-
 
 if [ ! -f "$CONFIG_DIR/genesis.json" ]; then
 

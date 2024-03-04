@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System.Text.RegularExpressions;
+
 namespace Plugin.Cosmos.src.Services
 {
     public class SetupService
@@ -155,7 +156,19 @@ namespace Plugin.Cosmos.src.Services
 
         public static string GetSnapshotUrl(string url)
         {
-            using (IWebDriver driver = new ChromeDriver())
+
+
+            var service = ChromeDriverService.CreateDefaultService();
+            service.SuppressInitialDiagnosticInformation = true;
+            service.HideCommandPromptWindow = true;
+
+
+            var options = new ChromeOptions();
+            options.AddArgument("--headless");
+            options.AddArgument("--disable-gpu");
+            options.AddArgument("--log-level=3");
+
+            using (IWebDriver driver = new ChromeDriver(service, options))
             {
                 driver.Navigate().GoToUrl(url);
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);

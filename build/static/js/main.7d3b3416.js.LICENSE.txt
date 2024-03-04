@@ -50,6 +50,17 @@
  */
 
 /**
+ * React Router DOM v6.22.2
+ *
+ * Copyright (c) Remix Software Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.md file in the root directory of this source tree.
+ *
+ * @license MIT
+ */
+
+/**
  * React Router v6.22.2
  *
  * Copyright (c) Remix Software Inc.
@@ -59,3 +70,15 @@
  *
  * @license MIT
  */
+
+/**
+* (c) Iconify
+*
+* For the full copyright and license information, please view the license.txt
+* files at https://github.com/iconify/iconify
+*
+* Licensed under MIT.
+*
+* @license MIT
+* @version 1.0.8
+*/

@@ -2,6 +2,7 @@
 using Plugin.Cosmos.src;
 using Plugin.Cosmos.src.DTO;
 using Plugin.Cosmos.src.Services;
+using System.Diagnostics;
 
 namespace Plugin.Cosmos.Commands
 {
@@ -57,7 +58,17 @@ namespace Plugin.Cosmos.Commands
 
             stateManager.DB.Store("STATE", PluginStateEnum.STARTING_NODE);
 
-            await ProcessService.ExecuteCommand("docker", "compose up -d", workingDirectory: SetupService.GetTmpAbsolutePath(Configurations.GAIA_FOLDER_NAME));
+            await ProcessService.ExecuteCommand("docker", "compose up -d", workingDirectory: SetupService.GetTmpAbsolutePath(Configurations.GAIA_FOLDER_NAME),
+            execute: async (Process process) =>
+            {
+                while (!await SetupService.IsContainnerRunning())
+                {
+                    LoggerService.Log("Waiting for the container to start");
+                    await Task.Delay(1000);
+                }
+
+                return "";
+            });
 
             return true;
         }
@@ -110,13 +121,6 @@ namespace Plugin.Cosmos.Commands
             }
 
         }
-
-        [KeepixPluginFn("test")]
-        public static async Task<bool> test()
-        {
-            return true;
-        }
-
 
     }
 }

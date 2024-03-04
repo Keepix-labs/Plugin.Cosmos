@@ -13,12 +13,14 @@ const execPluginFunction = async (argObject) => {
     exec(
       `./dist/${pluginId} ${JSON.stringify(JSON.stringify(argObject))}`,
       (error, stdout, stderr) => {
-        const result = JSON.parse(stdout);
+        try {
+          const result = JSON.parse(stdout);
 
-        resolve({
-          result: JSON.parse(result.jsonResult),
-          stdOut: result.stdOut,
-        });
+          resolve({
+            result: JSON.parse(result.jsonResult),
+            stdOut: result.stdOut,
+          });
+        } catch {}
       }
     );
   });
