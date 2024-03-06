@@ -145,7 +145,7 @@ export default function HomePage() {
           Reinstall.
         </BannerAlert>
       )}
-      {statusQuery?.data && statusQuery.data?.NodeState === "NODE_STOPPED" && (
+      {statusQuery?.data && statusQuery.data?.Alive === false && (
         <BigLogo full={true}>
           <Btn
             status="warning"
@@ -159,12 +159,14 @@ export default function HomePage() {
           </Btn>
         </BigLogo>
       )}
+
       {statusQuery?.data &&
         statusQuery.data?.NodeState === "NODE_RUNNING" &&
         walletQuery.data?.Wallet === undefined && <>setup wallet</>}
       {statusQuery?.data &&
         !syncProgressQuery?.data &&
-        statusQuery.data?.NodeState === "STARTING_INSTALLATION" && (
+        statusQuery.data?.NodeState === "STARTING_INSTALLATION" &&
+        statusQuery.data?.Alive === true && (
           <BigLoader
             title="Estimation: 1 to 5 minutes."
             label="Starting installation of the node"
@@ -175,8 +177,9 @@ export default function HomePage() {
         )}
       {statusQuery?.data &&
         !syncProgressQuery?.data &&
-        statusQuery.data?.NodeState === "SETUP_NODE" &&
-        !statusQuery.data?.IsSynchronizing && (
+        statusQuery.data?.NodeState === "NODE_RUNNING" &&
+        !statusQuery.data?.IsSynchronizing &&
+        statusQuery.data?.Alive === true && (
           <BigLoader
             title="Estimation: 10 to 20 minutes."
             label="Downloading snapshot file"
@@ -188,8 +191,9 @@ export default function HomePage() {
 
       {statusQuery?.data &&
         !syncProgressQuery?.data &&
-        statusQuery.data?.NodeState === "SETUP_NODE" &&
-        statusQuery.data?.IsSynchronizing && (
+        statusQuery.data?.NodeState === "NODE_RUNNING" &&
+        statusQuery.data?.IsSynchronizing &&
+        statusQuery.data?.Alive === true && (
           <BigLoader
             step="3/3"
             disableStep={false}
@@ -203,7 +207,8 @@ export default function HomePage() {
         !syncProgressQuery?.data &&
         statusQuery.data?.NodeState === "STARTING_SYNC" &&
         statusQuery.data?.SnapshotImportExitCode === "'0'" &&
-        !statusQuery.data?.IsSnapshotImportRunning && (
+        !statusQuery.data?.IsSnapshotImportRunning &&
+        statusQuery.data?.Alive === true && (
           <BigLoader
             full={true}
             label="Finalize the configuration and launch the node"

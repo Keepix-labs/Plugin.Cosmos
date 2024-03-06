@@ -45,9 +45,9 @@ namespace Plugin.Cosmos.src.Services
                     {
                         string result = await process.StandardOutput.ReadToEndAsync();
                         string error = await process.StandardError.ReadToEndAsync();
-                        Console.WriteLine(error);
+
                         process.WaitForExit();
-                        return result;
+                        return result + error;
                     }
                     else
                     {

@@ -69,7 +69,7 @@ namespace Plugin.Cosmos.Commands
                 return "";
             });
 
-            stateManager.DB.Store("STATE", PluginStateEnum.SETUP_NODE);
+            stateManager.DB.Store("STATE", PluginStateEnum.NODE_RUNNING);
             return true;
         }
 
