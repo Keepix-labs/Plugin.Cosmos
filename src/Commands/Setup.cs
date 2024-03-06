@@ -56,7 +56,6 @@ namespace Plugin.Cosmos.Commands
                 return false;
             }
 
-            stateManager.DB.Store("STATE", PluginStateEnum.STARTING_NODE);
 
             await ProcessService.ExecuteCommand("docker", "compose up -d", workingDirectory: SetupService.GetTmpAbsolutePath(Configurations.GAIA_FOLDER_NAME),
             execute: async (Process process) =>
@@ -66,10 +65,11 @@ namespace Plugin.Cosmos.Commands
                     LoggerService.Log("Waiting for the container to start");
                     await Task.Delay(1000);
                 }
-
+                process.Kill();
                 return "";
             });
 
+            stateManager.DB.Store("STATE", PluginStateEnum.SETUP_NODE);
             return true;
         }
 
@@ -117,6 +117,40 @@ namespace Plugin.Cosmos.Commands
             }
             catch
             {
+                return false;
+            }
+        }
+
+        [KeepixPluginFn("uninstall")]
+        public static async Task<bool> OnUInstall()
+        {
+            var allRulesPassed = await SetupService.ApplyRules(SetupService.IsDockerRunning);
+            if (!allRulesPassed)
+            {
+                return false;
+            }
+
+            stateManager = PluginStateManager.GetStateManager();
+
+            try
+            {
+                await ProcessService.ExecuteCommand("docker", "stop cosmos");
+                await ProcessService.ExecuteCommand("docker", "rm cosmos");
+                Thread.Sleep(1000);
+
+                await ProcessService.ExecuteCommand("docker", "rmi cosmos:latest");
+
+                Thread.Sleep(1000);
+                await ProcessService.ExecuteCommand("docker", "volume rm gaiad-data");
+                stateManager.DB.Store("STATE", PluginStateEnum.NO_STATE);
+
+                stateManager.DB.UnStore("WalletAddress");
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
                 return false;
             }
 

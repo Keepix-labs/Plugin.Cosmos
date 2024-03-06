@@ -12,6 +12,8 @@ PRUNING="custom"
 PRUNING_KEEP_RECENT="100"
 PRUNING_KEEP_EVERY="0"
 PRUNING_INTERVAL="10"
+SNAP_NAME=$(curl -s https://ss.cosmos.nodestake.org/ | egrep -o ">20.*\.tar.lz4" | tr -d ">")
+
 
 update_or_add() {
     local key="$1"
@@ -25,7 +27,8 @@ update_or_add() {
 }
 
 download_file() {
-    wget --timeout=120 -c $DOWNLOAD_LINK -O /root/cosmos.tar.lz4
+    #wget --timeout=120 -c $DOWNLOAD_LINK -O /root/cosmos.tar.lz4
+    wget --timeout=120 -c https://ss.cosmos.nodestake.org/${SNAP_NAME} -O /root/cosmos.tar.lz4
 }
 
 check_download_success() {

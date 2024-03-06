@@ -46,6 +46,7 @@ namespace Plugin.Cosmos.src.Services
             }
         }
 
+
         public static async Task<bool> IsSnapshotImportRunning()
         {
             try

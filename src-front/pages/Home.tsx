@@ -162,14 +162,25 @@ export default function HomePage() {
       {statusQuery?.data &&
         statusQuery.data?.NodeState === "NODE_RUNNING" &&
         walletQuery.data?.Wallet === undefined && <>setup wallet</>}
-
       {statusQuery?.data &&
         !syncProgressQuery?.data &&
-        statusQuery.data?.NodeState === "INSTALLING_SNAPSHOT" && (
+        statusQuery.data?.NodeState === "STARTING_INSTALLATION" && (
           <BigLoader
-            title="Estimation: 5 to 10 minutes."
-            label="Downloading snapshot file"
+            title="Estimation: 1 to 5 minutes."
+            label="Starting installation of the node"
             step="1/3"
+            disableStep={false}
+            full={true}
+          ></BigLoader>
+        )}
+      {statusQuery?.data &&
+        !syncProgressQuery?.data &&
+        statusQuery.data?.NodeState === "SETUP_NODE" &&
+        !statusQuery.data?.IsSynchronizing && (
+          <BigLoader
+            title="Estimation: 10 to 20 minutes."
+            label="Downloading snapshot file"
+            step="2/3"
             disableStep={false}
             full={true}
           ></BigLoader>
@@ -177,61 +188,15 @@ export default function HomePage() {
 
       {statusQuery?.data &&
         !syncProgressQuery?.data &&
-        statusQuery.data?.NodeState === "INSTALLING_NODE" &&
-        !statusQuery.data?.IsSnapshotImportRunning && (
+        statusQuery.data?.NodeState === "SETUP_NODE" &&
+        statusQuery.data?.IsSynchronizing && (
           <BigLoader
-            full={true}
-            step="2/3"
-            label="Start the synchronization and validation of the node with the downloaded snapshot"
-            isLoading={false}
-            disableStep={false}
-          >
-            <Btn
-              disabled={postStartSync.isPending ? true : false}
-              status={postStartSync.isPending ? "gray" : "success"}
-              onClick={async () => {
-                postStartSync.mutate();
-              }}
-            >
-              START SYNCHRONIZATION
-            </Btn>
-          </BigLoader>
-        )}
-      {statusQuery?.data &&
-        !syncProgressQuery?.data &&
-        statusQuery.data?.NodeState === "STARTING_SYNC" &&
-        statusQuery.data?.IsSnapshotImportRunning && (
-          <BigLoader
-            step="2/3"
+            step="3/3"
             disableStep={false}
             full={true}
             title="Estimation: 15 to 20 minutes."
             label="Synchronizing and validating data from a snapshot file"
           ></BigLoader>
-        )}
-
-      {statusQuery?.data &&
-        !syncProgressQuery?.data &&
-        statusQuery.data?.NodeState === "STARTING_SYNC" &&
-        statusQuery.data?.SnapshotImportExitCode !== "'0'" &&
-        !statusQuery.data?.IsSnapshotImportRunning && (
-          <BigLoader
-            full={true}
-            label="There was a minor issue, the node needs to be restarted. Please click on the 'Restart Node' button"
-            isLoading={false}
-            step="1/3"
-            disableStep={false}
-          >
-            <Btn
-              disabled={postRestartNode.isPending ? true : false}
-              status={postRestartNode.isPending ? "gray" : "success"}
-              onClick={async () => {
-                postRestartNode.mutate();
-              }}
-            >
-              RESTART NODE
-            </Btn>
-          </BigLoader>
         )}
 
       {statusQuery?.data &&

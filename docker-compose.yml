@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: cosmos
     ports:
       - "26656:26656"
       - "26657:26657"

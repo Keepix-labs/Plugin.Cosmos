@@ -7,6 +7,7 @@ namespace Plugin.Cosmos.src.Services
         NO_STATE,
         STARTING_INSTALLATION,
         INSTALLING_SNAPSHOT,
+        SETUP_NODE,
         INSTALLING_CLI,
         INSTALLING_NODE,
         STARTING_SYNC,
