@@ -198,7 +198,10 @@ export default function HomePage() {
             step="3/3"
             disableStep={false}
             full={true}
-            title="Estimation: 15 to 20 minutes."
+            title={`${
+              Number(statusQuery.data?.ServerLatestBlockHeight) -
+              Number(statusQuery.data?.LocallatestBlockHeight)
+            } blocks to validate to complete synchronization`}
             label="Synchronizing and validating data from a snapshot file"
           ></BigLoader>
         )}

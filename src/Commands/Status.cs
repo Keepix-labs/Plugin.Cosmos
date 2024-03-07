@@ -25,6 +25,8 @@ namespace Plugin.Cosmos.Commands
             return JsonConvert.SerializeObject(new
             {
                 IsSynchronizing = containerStatus?["SyncInfo"]?["catching_up"].Value<bool>(),
+                LocallatestBlockHeight = containerStatus?["SyncInfo"]?["latest_block_height"].Value<int>(),
+                ServerLatestBlockHeight = await FetchLatestBlockAsync(),
                 NodeState = stateManager.State.ToString(),
                 Alive = await SetupService.IsContainnerRunning(),
             });
@@ -44,5 +46,28 @@ namespace Plugin.Cosmos.Commands
                 return null;
             }
         }
+
+
+        public static async Task<string> FetchLatestBlockAsync()
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    string baseUrl = "https://cosmos-rpc.polkachu.com/status";
+                    HttpResponseMessage response = await client.GetAsync(baseUrl);
+                    response.EnsureSuccessStatusCode();
+                    var status = await response.Content.ReadAsStringAsync();
+                    JObject json = JObject.Parse(status);
+                    return json["result"]["sync_info"]["latest_block_height"].Value<string>();
+                }
+
+            }
+            catch
+            {
+                return "0";
+            }
+        }
+
     }
 }
